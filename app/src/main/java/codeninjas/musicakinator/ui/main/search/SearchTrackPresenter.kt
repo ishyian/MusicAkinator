@@ -15,6 +15,7 @@ constructor(
     private val getSongsByLyricUseCase: GetSongsByLyricUseCase
 ) : BasePresenter<SearchTrackView>() {
 
+
     fun getSongsByLyrics(lyrics: String) {
         if (lyrics.isEmpty()) return
         getSongsByLyricUseCase.createObservable(lyrics)
