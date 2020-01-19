@@ -54,6 +54,7 @@ class GameFragment : BaseFragment(), GameView {
             tvSongTitle.text = song.title
             Glide.with(context!!).load(album.cover).into(ivSongImage)
         }
+        //TODO::Play song, maybe ui of player
     }
 
     override fun showResultDialog(text: String) {
