@@ -1,5 +1,6 @@
 package codeninjas.musicakinator.ui.main.game
 
+import codeninjas.musicakinator.domain.models.dataModels.SongListDataModel
 import codeninjas.musicakinator.domain.usecases.GetDizzerTrackByTitleUseCase
 import codeninjas.musicakinator.other.base.BasePresenter
 import codeninjas.musicakinator.other.custom.annotations.PerFragment
@@ -12,41 +13,20 @@ import javax.inject.Inject
 class GamePresenter
 @Inject
 constructor(
+    private val songListDataModel: SongListDataModel,
     private val getDizzerTrackByTitleUseCase: GetDizzerTrackByTitleUseCase
 ) : BasePresenter<GameView>() {
 
-    private var tryCount = 0
-    private lateinit var songs: ArrayList<String>
+    private var currentSongPosition = 0
 
-    fun loadSongs(songsExtra: ArrayList<String>?) {
-        tryCount = songsExtra!!.size
-        songs = songsExtra
-        nextSong()
+    init {
+        getNextTrackForListing()
     }
 
-    fun nextSong() {
-        if (tryCount > 0) {
-            tryCount--
-            getSongAudio(songs.first())
-            songs.removeAt(0)
-        } else viewState.onNoSongResultsFound()
-    }
-
-    private fun getSongAudio(title: String){
-        getDizzerTrackByTitleUseCase.createObservable(title)
+    fun getNextTrackForListing() {
+        getDizzerTrackByTitleUseCase.createObservable(songListDataModel.songs[currentSongPosition])
             .async()
-            .doOnSubscribe { viewState.showProgress() }
-            .doOnTerminate { viewState.hideProgress() }
-            .subscribe({
-                viewState.onSongFound(it.title)
-            }, {
-                viewState.showError(it)
-            }).tracked()
-
+            .subscribe()
+            .tracked()
     }
-
-    fun navigateToResult() {
-
-    }
-
 }
