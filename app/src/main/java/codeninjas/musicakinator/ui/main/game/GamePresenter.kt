@@ -13,20 +13,40 @@ import javax.inject.Inject
 class GamePresenter
 @Inject
 constructor(
-    private val songListDataModel: SongListDataModel,
+    songListDataModel: SongListDataModel,
     private val getDizzerTrackByTitleUseCase: GetDizzerTrackByTitleUseCase
 ) : BasePresenter<GameView>() {
 
-    private var currentSongPosition = 0
+    private val songs: ArrayList<String> = ArrayList(songListDataModel.songs)
+    private var tryCount = if(songs.size > 5) 5 else songs.size
 
     init {
-        getNextTrackForListing()
+        nextSong()
     }
 
-    fun getNextTrackForListing() {
-        getDizzerTrackByTitleUseCase.createObservable(songListDataModel.songs[currentSongPosition])
+    fun nextSong() {
+        if (tryCount > 0) {
+            tryCount--
+            getSongAudio(songs.first())
+            songs.removeAt(0)
+        } else viewState.onNoSongResultsFound()
+    }
+
+    private fun getSongAudio(title: String){
+        getDizzerTrackByTitleUseCase.createObservable(title)
             .async()
-            .subscribe()
-            .tracked()
+            .doOnSubscribe { viewState.showProgress() }
+            .doOnTerminate { viewState.hideProgress() }
+            .subscribe({
+                viewState.onSongFound(it)
+            }, {
+                //If dizzer dont found track
+                nextSong()
+            }).tracked()
+
+    }
+
+    fun navigateToResult(songFound: Boolean) {
+
     }
 }
