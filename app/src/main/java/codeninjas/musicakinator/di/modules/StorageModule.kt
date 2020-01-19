@@ -15,5 +15,4 @@ class StorageModule {
     fun provideSharedPreferences(context: Context): SharedPreferences {
         return PreferenceManager.getDefaultSharedPreferences(context)
     }
-
 }

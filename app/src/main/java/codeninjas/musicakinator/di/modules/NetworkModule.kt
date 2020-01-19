@@ -6,10 +6,8 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
-
 @Module
 class NetworkModule {
-
 
     @Singleton
     @Provides
@@ -22,6 +20,4 @@ class NetworkModule {
     fun provideRxJava2CallAdapterFactory(): RxJava2CallAdapterFactory {
         return RxJava2CallAdapterFactory.create()
     }
-
-
 }

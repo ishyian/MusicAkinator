@@ -31,7 +31,7 @@ class SearchTrackFragment : BaseFragment(),
         btn_guess.setRoundedBtnBackground(7, R.color.colorPrimary)
         btn_guess.setOnClickListener {
             val lyrics = edt_input_lyrics.text.toString()
-            presenter.getSongByLyrics(lyrics)
+            presenter.getTrackByLyrics(lyrics)
         }
     }
 }

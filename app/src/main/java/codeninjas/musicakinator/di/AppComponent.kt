@@ -17,7 +17,8 @@ import javax.inject.Singleton
         AppModule::class,
         NetworkModule::class,
         StorageModule::class,
-        AuddModule::class
+        AuddModule::class,
+        DizzerModule::class
     ]
 )
 
@@ -27,6 +28,7 @@ interface AppComponent : AndroidInjector<App> {
     interface Builder {
         @BindsInstance
         fun application(application: Application): Builder
+
         fun build(): AppComponent
     }
 }

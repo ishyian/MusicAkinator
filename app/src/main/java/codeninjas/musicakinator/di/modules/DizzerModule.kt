@@ -1,32 +1,32 @@
 package codeninjas.musicakinator.di.modules
 
-import codeninjas.musicakinator.network.provider.AuddGlobalDataProvider
+import codeninjas.musicakinator.network.provider.DizzerGlobalDataProvider
 import codeninjas.musicakinator.util.constants.ApiConstants
 import dagger.Module
 import dagger.Provides
-
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
 import javax.inject.Singleton
 
+
 @Module
-class AuddModule {
+class DizzerModule {
 
     @Singleton
     @Provides
-    @Named("BASE_URL_Audd")
+    @Named("BASE_URL_Dizzer")
     fun provideBaseUrl(): String {
-        return ApiConstants.BASE_URL_AUDD
+        return ApiConstants.BASE_URL_DIZZER
     }
 
 
     @Singleton
     @Provides
-    @Named("provideRetrofitAudd")
+    @Named("provideRetrofitDizzer")
     fun provideRetrofit(
-        @Named("BASE_URL_Audd") baseUrl: String,
+        @Named("BASE_URL_Dizzer") baseUrl: String,
         gsonConverterFactory: GsonConverterFactory,
         rxJava2CallAdapterFactory: RxJava2CallAdapterFactory
     ): Retrofit {
@@ -39,7 +39,7 @@ class AuddModule {
 
     @Provides
     @Singleton
-    fun provideApiService(@Named("provideRetrofitAudd") retrofit: Retrofit): AuddGlobalDataProvider {
-        return retrofit.create(AuddGlobalDataProvider::class.java)
+    fun provideApiService(@Named("provideRetrofitDizzer") retrofit: Retrofit): DizzerGlobalDataProvider {
+        return retrofit.create(DizzerGlobalDataProvider::class.java)
     }
 }

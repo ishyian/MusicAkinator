@@ -1,6 +1,5 @@
 package codeninjas.musicakinator.data.audd.responseModel
 
-
 import com.google.gson.annotations.SerializedName
 
 data class GetSongsByLyricResponseModel(

@@ -1,6 +1,7 @@
 package codeninjas.musicakinator.ui.search
 
-import codeninjas.musicakinator.network.audd.usecase.GetSongsByLyricUseCase
+import codeninjas.musicakinator.network.audd.usecase.GetDizzerTrackByTitleUseCase
+import codeninjas.musicakinator.network.audd.usecase.GetSongByLyricUseCase
 import codeninjas.musicakinator.ui.base.BasePresenter
 import codeninjas.musicakinator.util.annotations.PerFragment
 import codeninjas.musicakinator.util.extensions.async
@@ -14,22 +15,22 @@ class SearchTrackPresenter
 @Inject
 constructor(
     private val router: Router,
-    private val getSongsByLyricUseCase: GetSongsByLyricUseCase
+    private val getSongByLyricUseCase: GetSongByLyricUseCase,
+    private val getDizzerTrackByTitleUseCase: GetDizzerTrackByTitleUseCase
 ) : BasePresenter<SearchTrackView>() {
 
-    fun getSongByLyrics(lyrics: String) {
+    fun getTrackByLyrics(lyrics: String) {
         if (lyrics.isEmpty()) return
-        getSongsByLyricUseCase.createObservable(lyrics)
-            .async()
+        getSongByLyricUseCase.createObservable(lyrics)
+            .flatMap { getDizzerTrackByTitleUseCase.createObservable(it) }
             .doOnSubscribe { viewState.showProgress() }
             .doOnTerminate { viewState.hideProgress() }
+            .async()
             .subscribe({
-                val songs = it.result.map { song -> song.title }.toList()
-                viewState.showMessage(songs.joinToString(",\n"))
+                println("item: $it")
             }, {
-                viewState.showError(it)
-            }
-            ).tracked()
+                println("track not found :(")
+            })
+            .tracked()
     }
-
 }

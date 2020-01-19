@@ -30,5 +30,4 @@ class NavigationModule {
     fun provideNavigatorHolder(): NavigatorHolder {
         return cicerone.navigatorHolder
     }
-
 }

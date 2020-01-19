@@ -13,6 +13,4 @@ abstract class MainFragmentsBindingModule {
     @PerFragment
     @ContributesAndroidInjector
     abstract fun bindMainScreen(): SearchTrackFragment
-
-
 }
