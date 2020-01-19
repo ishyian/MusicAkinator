@@ -1,5 +1,7 @@
 package codeninjas.musicakinator.di.modules
 
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -11,8 +13,14 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideGsonConverterFactory(): GsonConverterFactory {
-        return GsonConverterFactory.create()
+    fun provideGson(): Gson {
+        return GsonBuilder().create()
+    }
+
+    @Singleton
+    @Provides
+    fun provideGsonConverterFactory(gson: Gson): GsonConverterFactory {
+        return GsonConverterFactory.create(gson)
     }
 
     @Singleton
