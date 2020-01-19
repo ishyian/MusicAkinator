@@ -1,7 +1,7 @@
 package codeninjas.musicakinator.di.modules
 
-import codeninjas.musicakinator.network.provider.DizzerGlobalDataProvider
-import codeninjas.musicakinator.util.constants.ApiConstants
+import codeninjas.musicakinator.domain.providers.DizzerGlobalDataProvider
+import codeninjas.musicakinator.other.custom.constants.ApiConstants
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
