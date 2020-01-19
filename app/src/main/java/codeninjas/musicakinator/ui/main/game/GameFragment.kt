@@ -1,7 +1,10 @@
 package codeninjas.musicakinator.ui.main.game
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import codeninjas.musicakinator.R
 import codeninjas.musicakinator.domain.models.dataModels.SongListDataModel
 import codeninjas.musicakinator.domain.models.responseModels.DizzerTrackResponseModel
@@ -11,8 +14,10 @@ import codeninjas.musicakinator.other.custom.constants.SONG_LIST_DATA_MODEL_EXTR
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_game.*
+import kotlinx.android.synthetic.main.sheet_result_dialog.view.*
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
@@ -48,6 +53,24 @@ class GameFragment : BaseFragment(), GameView {
         song.apply {
             tvSongTitle.text = song.title
             Glide.with(context!!).load(album.cover).into(ivSongImage)
+        }
+    }
+
+    override fun showResultDialog(text: String) {
+        val bottomSheetDialog = BottomSheetDialog(context!!, R.style.BottomSheetDialog)
+        val dialogView = layoutInflater.inflate(R.layout.sheet_result_dialog, null)
+        dialogView.dialog_text_title.text = text
+        val confirmBtn = dialogView.findViewById<TextView>(R.id.dialog_btn_next)
+        bottomSheetDialog.setContentView(dialogView)
+        bottomSheetDialog.setCancelable(false)
+        confirmBtn.setOnClickListener {
+            presenter.returnToSearchTrackScreen()
+            bottomSheetDialog.dismiss()
+
+        }
+        bottomSheetDialog.apply {
+            window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            show()
         }
     }
 

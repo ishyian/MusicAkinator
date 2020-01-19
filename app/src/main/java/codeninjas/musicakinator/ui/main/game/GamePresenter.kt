@@ -5,7 +5,9 @@ import codeninjas.musicakinator.domain.usecases.GetDizzerTrackByTitleUseCase
 import codeninjas.musicakinator.other.base.BasePresenter
 import codeninjas.musicakinator.other.custom.annotations.PerFragment
 import codeninjas.musicakinator.other.custom.extensions.async
+import codeninjas.musicakinator.other.screens.MainScreens
 import com.arellomobile.mvp.InjectViewState
+import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
 @PerFragment
@@ -14,11 +16,13 @@ class GamePresenter
 @Inject
 constructor(
     songListDataModel: SongListDataModel,
-    private val getDizzerTrackByTitleUseCase: GetDizzerTrackByTitleUseCase
+    private val getDizzerTrackByTitleUseCase: GetDizzerTrackByTitleUseCase,
+    private val router: Router
 ) : BasePresenter<GameView>() {
 
     private val songs: ArrayList<String> = ArrayList(songListDataModel.songs)
     private var tryCount = if(songs.size > 5) 5 else songs.size
+    private var lastFoundSong: String? = null
 
     init {
         nextSong()
@@ -27,7 +31,8 @@ constructor(
     fun nextSong() {
         if (tryCount > 0) {
             tryCount--
-            getSongAudio(songs.first())
+            lastFoundSong = songs.first()
+            getSongAudio(lastFoundSong!!)
             songs.removeAt(0)
         } else viewState.onNoSongResultsFound()
     }
@@ -47,6 +52,12 @@ constructor(
     }
 
     fun navigateToResult(songFound: Boolean) {
+        if(songFound){
+            viewState.showResultDialog("Congratulations! We found your song: $lastFoundSong")
+        } else viewState.showResultDialog("Sorry, we didn't find your song. Please be accurate in providing lyrics")
+    }
 
+    fun returnToSearchTrackScreen() {
+        router.newRootScreen(MainScreens.SearchTrackScreen())
     }
 }
