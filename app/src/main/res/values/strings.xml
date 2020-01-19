@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">MusicAkinator</string>
     <string name="ok">Ok</string>
+    <string name="input_lyrics_hint">Input lyrics of song</string>
+    <string name="guess">Guess</string>
 </resources>

@@ -129,7 +129,7 @@ fun AppCompatButton.setRoundedBtnBackground(borderRadius: Int, color: Int) {
     this.background = DrawableBuilder()
         .rectangle()
         .cornerRadius(borderRadius.px)
-        .solidColor(color)
+        .solidColor(ContextCompat.getColor(this.context!!, color))
         .build()
 }
 
@@ -137,8 +137,8 @@ fun AppCompatButton.setRoundedBtnBackground(borderRadius: Int, color: Int, disab
     this.background = DrawableBuilder()
         .rectangle()
         .cornerRadius(borderRadius.px)
-        .solidColor(color)
-        .solidColorDisabled(disabledColor)
+        .solidColor(ContextCompat.getColor(this.context!!, color))
+        .solidColorDisabled(ContextCompat.getColor(this.context!!, disabledColor))
         .build()
 }
 

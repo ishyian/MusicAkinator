@@ -6,8 +6,10 @@ import android.view.View
 import codeninjas.musicakinator.R
 import codeninjas.musicakinator.ui.base.BaseFragment
 import codeninjas.musicakinator.util.annotations.LayoutResourceId
+import codeninjas.musicakinator.util.extensions.setRoundedBtnBackground
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
+import kotlinx.android.synthetic.main.fragment_search_track.*
 import javax.inject.Inject
 
 @LayoutResourceId(R.layout.fragment_search_track)
@@ -26,6 +28,10 @@ class SearchTrackFragment : BaseFragment(),
     }
 
     private fun initUi() {
-        //TODO Make ui
+        btn_guess.setRoundedBtnBackground(7, R.color.colorPrimary)
+        btn_guess.setOnClickListener {
+            val lyrics = edt_input_lyrics.text.toString()
+            presenter.getSongByLyrics(lyrics)
+        }
     }
 }

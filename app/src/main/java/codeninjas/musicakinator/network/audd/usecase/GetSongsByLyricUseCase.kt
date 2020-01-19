@@ -4,8 +4,11 @@ import codeninjas.musicakinator.data.audd.responseModel.GetSongsByLyricResponseM
 import codeninjas.musicakinator.network.audd.repository.AuddRepository
 import codeninjas.musicakinator.util.base.BaseUseCase
 import io.reactivex.Observable
+import javax.inject.Inject
 
-class GetSongsByLyricUseCase(repository: AuddRepository):
+class GetSongsByLyricUseCase
+@Inject
+constructor(repository: AuddRepository) :
     BaseUseCase<AuddRepository, String, Observable<GetSongsByLyricResponseModel>>(repository) {
 
 
