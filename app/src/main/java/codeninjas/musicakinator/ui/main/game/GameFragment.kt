@@ -2,6 +2,8 @@ package codeninjas.musicakinator.ui.main.game
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -22,6 +24,7 @@ import kotlinx.android.synthetic.main.sheet_result_dialog.view.*
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
+
 @LayoutResourceId(R.layout.fragment_game)
 class GameFragment : BaseFragment(), GameView {
 
@@ -35,13 +38,17 @@ class GameFragment : BaseFragment(), GameView {
     @Inject
     lateinit var router: Router
 
+    lateinit var mediaPlayer: MediaPlayer
+
     override fun renderView(view: View, savedInstanceState: Bundle?) {
         btnYes.setRoundedBtnBackground(7, R.color.colorPrimary)
         btnNo.setRoundedBtnBackground(7, R.color.colorError)
         btnNo.setOnClickListener {
+            releaseMediaPlayer()
             presenter.nextSong()
         }
         btnYes.setOnClickListener {
+            releaseMediaPlayer()
             presenter.navigateToResult(songFound = true)
         }
 
@@ -57,8 +64,22 @@ class GameFragment : BaseFragment(), GameView {
         song.apply {
             tvSongTitle.text = song.title
             Glide.with(context!!).load(album.cover).into(ivSongImage)
+            createMediaPlayer(preview)
+        }
+    }
 
-            //TODO::Play song, maybe ui of player
+    private fun createMediaPlayer(url: String) {
+        mediaPlayer = MediaPlayer()
+        mediaPlayer.setDataSource(context!!, Uri.parse(url))
+        mediaPlayer.prepare()
+        mediaPlayer.isLooping = true
+        mediaPlayer.start()
+    }
+
+    private fun releaseMediaPlayer() {
+        if (::mediaPlayer.isInitialized) {
+            mediaPlayer.stop()
+            mediaPlayer.release()
         }
     }
 
@@ -80,6 +101,7 @@ class GameFragment : BaseFragment(), GameView {
         }
     }
 
+
     companion object {
         fun newInstance(songListDataModel: SongListDataModel): GameFragment {
             return GameFragment().apply {
@@ -90,4 +112,5 @@ class GameFragment : BaseFragment(), GameView {
             }
         }
     }
+
 }
