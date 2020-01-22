@@ -185,5 +185,15 @@ fun Fragment.drawSimpleSelectorDialog(
     dialog.show()
 }
 
+fun AppCompatEditText.setInputBackground() {
+    this.background = DrawableBuilder()
+        .hairlineBordered()
+
+        .rectangle()
+        .cornerRadius(10.px)
+        .strokeColor(ContextCompat.getColor(this.context!!, R.color.textSecondary))
+        .build()
+}
+
 
 

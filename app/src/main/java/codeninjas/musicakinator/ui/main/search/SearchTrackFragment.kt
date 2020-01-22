@@ -6,6 +6,7 @@ import android.view.View
 import codeninjas.musicakinator.R
 import codeninjas.musicakinator.other.base.BaseFragment
 import codeninjas.musicakinator.other.custom.annotations.LayoutResourceId
+import codeninjas.musicakinator.other.custom.extensions.setInputBackground
 import codeninjas.musicakinator.other.custom.extensions.setRoundedBtnBackground
 import codeninjas.musicakinator.other.custom.extensions.showAlertMessage
 import codeninjas.musicakinator.other.screens.MainScreens
@@ -34,6 +35,7 @@ class SearchTrackFragment : BaseFragment(),
     }
 
     private fun initUi() {
+        edt_input_lyrics.setInputBackground()
         btn_guess.setRoundedBtnBackground(7, R.color.colorPrimary)
         btn_guess.setOnClickListener {
             val lyrics = edt_input_lyrics.text.toString()

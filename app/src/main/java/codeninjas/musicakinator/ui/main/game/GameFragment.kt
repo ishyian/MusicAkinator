@@ -11,6 +11,7 @@ import codeninjas.musicakinator.domain.models.responseModels.DizzerTrackResponse
 import codeninjas.musicakinator.other.base.BaseFragment
 import codeninjas.musicakinator.other.custom.annotations.LayoutResourceId
 import codeninjas.musicakinator.other.custom.constants.SONG_LIST_DATA_MODEL_EXTRA
+import codeninjas.musicakinator.other.custom.extensions.setRoundedBtnBackground
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.bumptech.glide.Glide
@@ -35,12 +36,15 @@ class GameFragment : BaseFragment(), GameView {
     lateinit var router: Router
 
     override fun renderView(view: View, savedInstanceState: Bundle?) {
+        btnYes.setRoundedBtnBackground(7, R.color.colorPrimary)
+        btnNo.setRoundedBtnBackground(7, R.color.colorError)
         btnNo.setOnClickListener {
             presenter.nextSong()
         }
         btnYes.setOnClickListener {
             presenter.navigateToResult(songFound = true)
         }
+
     }
 
     override fun onNoSongResultsFound() {
@@ -53,8 +57,9 @@ class GameFragment : BaseFragment(), GameView {
         song.apply {
             tvSongTitle.text = song.title
             Glide.with(context!!).load(album.cover).into(ivSongImage)
+
+            //TODO::Play song, maybe ui of player
         }
-        //TODO::Play song, maybe ui of player
     }
 
     override fun showResultDialog(text: String) {
