@@ -82,23 +82,15 @@
 
     </LinearLayout>
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <ImageView
+        android:id="@+id/btn_control"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/text_song_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans"
-            android:padding="16dp"
-            android:textColor="@color/black"
-            android:textSize="14sp" />
-    </androidx.core.widget.NestedScrollView>
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_pause" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

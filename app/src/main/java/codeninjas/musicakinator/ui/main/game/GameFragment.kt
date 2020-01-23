@@ -14,6 +14,7 @@ import codeninjas.musicakinator.other.base.BaseFragment
 import codeninjas.musicakinator.other.custom.annotations.LayoutResourceId
 import codeninjas.musicakinator.other.custom.constants.SONG_LIST_DATA_MODEL_EXTRA
 import codeninjas.musicakinator.other.custom.extensions.setRoundedBtnBackground
+import codeninjas.musicakinator.other.custom.extensions.visible
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.bumptech.glide.Glide
@@ -40,6 +41,8 @@ class GameFragment : BaseFragment(), GameView {
 
     lateinit var mediaPlayer: MediaPlayer
 
+    private var isSongPlaying = false
+
     override fun renderView(view: View, savedInstanceState: Bundle?) {
         btnYes.setRoundedBtnBackground(7, R.color.colorPrimary)
         btnNo.setRoundedBtnBackground(7, R.color.colorError)
@@ -51,8 +54,35 @@ class GameFragment : BaseFragment(), GameView {
             releaseMediaPlayer()
             presenter.navigateToResult(songFound = true)
         }
+        btn_control.setOnClickListener {
+            isSongPlaying = if (isSongPlaying) {
+                pauseSong()
+                false
+            } else {
+                startSong()
+                true
+            }
+        }
 
     }
+
+    private fun startSong() {
+        if (::mediaPlayer.isInitialized) {
+            mediaPlayer.start()
+            showPauseControl()
+        }
+    }
+
+    private fun pauseSong() {
+        if (::mediaPlayer.isInitialized && mediaPlayer.isPlaying) {
+            mediaPlayer.pause()
+            showPlayControl()
+        }
+    }
+
+    private fun showPauseControl() = btn_control.setImageResource(R.drawable.ic_pause)
+
+    private fun showPlayControl() = btn_control.setImageResource(R.drawable.ic_play_arrow)
 
     override fun onNoSongResultsFound() {
         tvSongTitle.text = "No results found"
@@ -61,10 +91,12 @@ class GameFragment : BaseFragment(), GameView {
     }
 
     override fun onSongFound(song: DizzerTrackResponseModel) {
+        showPauseControl()
         song.apply {
             tvSongTitle.text = "${artist.name} - ${song.title}"
             Glide.with(context!!).load(album.cover).into(ivSongImage)
             createMediaPlayer(preview)
+            btn_control.visible()
         }
     }
 
@@ -74,6 +106,7 @@ class GameFragment : BaseFragment(), GameView {
         mediaPlayer.prepare()
         mediaPlayer.isLooping = true
         mediaPlayer.start()
+        isSongPlaying = true
     }
 
     private fun releaseMediaPlayer() {
@@ -81,6 +114,7 @@ class GameFragment : BaseFragment(), GameView {
             if (::mediaPlayer.isInitialized && mediaPlayer.isPlaying) {
                 mediaPlayer.stop()
                 mediaPlayer.release()
+                isSongPlaying = false
             }
         } catch (ex: IllegalStateException) {
             ex.printStackTrace()
