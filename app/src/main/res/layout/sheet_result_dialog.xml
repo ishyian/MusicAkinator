@@ -33,30 +33,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
             android:fontFamily="@font/open_sans"
             android:padding="16dp"
             android:text="@string/start_again"
             android:textColor="@color/colorPrimary"
-            app:layout_constraintBottom_toBottomOf="@+id/divider"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/divider"
-            app:layout_constraintTop_toTopOf="@+id/divider" />
-
-        <View
-            android:id="@+id/divider"
-            android:layout_width="1dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="24dp"
-            android:background="@color/backgroundGrey"
-            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/dialog_text_title" />
+            app:layout_constraintTop_toBottomOf="@+id/dialog_text_title" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

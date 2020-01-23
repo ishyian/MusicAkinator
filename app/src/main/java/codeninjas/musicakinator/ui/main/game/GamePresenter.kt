@@ -21,7 +21,7 @@ constructor(
 ) : BasePresenter<GameView>() {
 
     private val songs: ArrayList<String> = ArrayList(songListDataModel.songs)
-    private var tryCount = if(songs.size > 5) 5 else songs.size
+    private var tryCount = if (songs.size > 5) 5 else songs.size
     private var lastFoundSong: String? = null
 
     init {
@@ -37,12 +37,13 @@ constructor(
         } else viewState.onNoSongResultsFound()
     }
 
-    private fun getSongAudio(title: String){
+    private fun getSongAudio(title: String) {
         getDizzerTrackByTitleUseCase.createObservable(title)
             .async()
             .doOnSubscribe { viewState.showProgress() }
             .doOnTerminate { viewState.hideProgress() }
             .subscribe({
+                lastFoundSong = "${it.artist.name} - ${it.title}"
                 viewState.onSongFound(it)
             }, {
                 //If dizzer dont found track
@@ -52,7 +53,7 @@ constructor(
     }
 
     fun navigateToResult(songFound: Boolean) {
-        if(songFound){
+        if (songFound) {
             viewState.showResultDialog("Congratulations! We found your song: $lastFoundSong")
         } else viewState.showResultDialog("Sorry, we didn't find your song. Please be accurate in providing lyrics")
     }

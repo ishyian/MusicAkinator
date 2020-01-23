@@ -62,7 +62,7 @@ class GameFragment : BaseFragment(), GameView {
 
     override fun onSongFound(song: DizzerTrackResponseModel) {
         song.apply {
-            tvSongTitle.text = song.title
+            tvSongTitle.text = "${artist.name} - ${song.title}"
             Glide.with(context!!).load(album.cover).into(ivSongImage)
             createMediaPlayer(preview)
         }
@@ -77,10 +77,15 @@ class GameFragment : BaseFragment(), GameView {
     }
 
     private fun releaseMediaPlayer() {
-        if (::mediaPlayer.isInitialized) {
-            mediaPlayer.stop()
-            mediaPlayer.release()
+        try {
+            if (::mediaPlayer.isInitialized && mediaPlayer.isPlaying) {
+                mediaPlayer.stop()
+                mediaPlayer.release()
+            }
+        } catch (ex: IllegalStateException) {
+            ex.printStackTrace()
         }
+
     }
 
     override fun showResultDialog(text: String) {
@@ -111,6 +116,11 @@ class GameFragment : BaseFragment(), GameView {
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        releaseMediaPlayer()
     }
 
 }
