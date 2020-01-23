@@ -47,8 +47,13 @@ class SearchTrackFragment : BaseFragment(),
         router.navigateTo(MainScreens.GameScreen(songs))
     }
 
+    override fun onInputSongLyricsEmpty() {
+        showAlertMessage("Please input lyrics of song!")
+
+    }
+
     override fun onGetSongsIsEmpty() {
-        showAlertMessage("songs is empty")
+        showAlertMessage("We didn't find any songs. Please be accurate when providing lyrics")
     }
 
 }

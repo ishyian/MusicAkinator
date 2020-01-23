@@ -54,8 +54,8 @@ constructor(
 
     fun navigateToResult(songFound: Boolean) {
         if (songFound) {
-            viewState.showResultDialog("Congratulations! We found your song: $lastFoundSong")
-        } else viewState.showResultDialog("Sorry, we didn't find your song. Please be accurate in providing lyrics")
+            viewState.showResultDialog("Ba-boom! We found your song: $lastFoundSong")
+        } else viewState.showResultDialog("Sorry, we didn't find your song. You win.")
     }
 
     fun returnToSearchTrackScreen() {

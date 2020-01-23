@@ -17,7 +17,10 @@ constructor(
 
 
     fun getSongsByLyrics(lyrics: String) {
-        if (lyrics.isEmpty()) return
+        if (lyrics.trim().isEmpty()) {
+            viewState.onInputSongLyricsEmpty()
+            return
+        }
         getSongsByLyricUseCase.createObservable(lyrics)
             .doOnSubscribe { viewState.showProgress() }
             .doOnTerminate { viewState.hideProgress() }

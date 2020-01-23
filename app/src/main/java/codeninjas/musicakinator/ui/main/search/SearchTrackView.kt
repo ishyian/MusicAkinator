@@ -11,4 +11,7 @@ interface SearchTrackView : BaseView {
 
     @StateStrategyType(SkipStrategy::class)
     fun onGetSongsIsEmpty()
+
+    @StateStrategyType(SkipStrategy::class)
+    fun onInputSongLyricsEmpty()
 }
