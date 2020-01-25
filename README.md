@@ -1,6 +1,7 @@
 # Music Akinator
 
 Let our app find your song by provided lyrics. Up to 5 trys. 
+![Alt text]("https://i.imgur.com/G2wJSWl.jpg") 
 
 ### Installing
 
