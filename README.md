@@ -12,6 +12,10 @@ Also you can listen preview of track in app and see cover of song.
 
 Download apk file under apk folder and install it on your phone with Android OS. Minimum OS version - 21.
 
+### Requirements
+
+In order to build app you need to provide your Audd and Dizzer api tokens in ApiConstants.kt
+
 ## Built With
 * Kotlin
 * Android SDK
