@@ -1,9 +1,14 @@
 package codeninjas.musicakinator.ui.main
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.speech.RecognizerIntent
 import codeninjas.musicakinator.R
 import codeninjas.musicakinator.other.base.BaseActivity
+import codeninjas.musicakinator.other.base.OnSpeechRecognizeListener
 import codeninjas.musicakinator.other.custom.annotations.LayoutResourceId
+import codeninjas.musicakinator.other.custom.extensions.currentFragment
 import codeninjas.musicakinator.other.screens.MainScreens
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
@@ -37,6 +42,22 @@ class MainActivity : BaseActivity() {
     override fun onPause() {
         super.onPause()
         navigatorHolder.removeNavigator()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_SPEECH_RECOGNIZER && resultCode == Activity.RESULT_OK) {
+            data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)?.let {
+                val currentFragment = supportFragmentManager.currentFragment
+                if (currentFragment is OnSpeechRecognizeListener) {
+                    currentFragment.onSpeechRecognize(it)
+                }
+            }
+        }
+    }
+
+    companion object {
+        const val REQUEST_CODE_SPEECH_RECOGNIZER = 600
     }
 
 }

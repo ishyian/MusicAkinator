@@ -18,18 +18,18 @@
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/edt_input_lyrics"
+        style="@style/InputPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:textColor="@color/black"
-        android:hint="@string/input_lyrics_hint"
-        style="@style/InputPrimary"
-        android:padding="8dp"
-        android:lines="4"
+        android:layout_marginEnd="8dp"
         android:gravity="top"
+        android:hint="@string/input_lyrics_hint"
+        android:lines="4"
+        android:padding="8dp"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/image_mic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -60,5 +60,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/image_mic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/edt_input_lyrics"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/edt_input_lyrics"
+        app:srcCompat="@drawable/ic_mic" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

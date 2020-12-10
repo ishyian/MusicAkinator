@@ -15,6 +15,7 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import codeninjas.musicakinator.R
 import codeninjas.musicakinator.ui.main.MainActivity
 
@@ -194,6 +195,9 @@ fun AppCompatEditText.setInputBackground() {
         .strokeColor(ContextCompat.getColor(this.context!!, R.color.textSecondary))
         .build()
 }
+
+inline val FragmentManager.currentFragment: Fragment?
+    get() = this.findFragmentById(R.id.container)
 
 
 
