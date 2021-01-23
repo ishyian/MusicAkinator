@@ -1,19 +1,15 @@
 package codeninjas.musicakinator.other.base
 
 import android.app.Dialog
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import codeninjas.musicakinator.other.custom.annotations.LayoutResourceId
 import codeninjas.musicakinator.other.custom.extensions.showAlertMessage
 import codeninjas.musicakinator.other.custom.extensions.showErrorMessage
-import com.arellomobile.mvp.MvpAppCompatFragment
-
-import dagger.android.support.AndroidSupportInjection
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import moxy.MvpAppCompatFragment
 
 abstract class BaseFragment : MvpAppCompatFragment() {
 
@@ -23,18 +19,11 @@ abstract class BaseFragment : MvpAppCompatFragment() {
 
     private var dialog: ProgressDialog? = null
 
-
-    override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this)
-        super.onAttach(context)
-    }
+    abstract val layoutRes: Int
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view: View? = null
-        val layoutResourceId = javaClass.getAnnotation(LayoutResourceId::class.java)
-        if (layoutResourceId != null) {
-            view = inflater.inflate(layoutResourceId.value, container, false)
-        }
+        view = inflater.inflate(layoutRes, container, false)
         return view
     }
 

@@ -11,33 +11,38 @@ import codeninjas.musicakinator.R
 import codeninjas.musicakinator.domain.models.dataModels.SongListDataModel
 import codeninjas.musicakinator.domain.models.responseModels.DizzerTrackResponseModel
 import codeninjas.musicakinator.other.base.BaseFragment
-import codeninjas.musicakinator.other.custom.annotations.LayoutResourceId
+import codeninjas.musicakinator.other.custom.annotations.GlobalRouterQualifier
 import codeninjas.musicakinator.other.custom.constants.SONG_LIST_DATA_MODEL_EXTRA
 import codeninjas.musicakinator.other.custom.extensions.setRoundedBtnBackground
 import codeninjas.musicakinator.other.custom.extensions.visible
-import com.arellomobile.mvp.presenter.InjectPresenter
-import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_game.*
 import kotlinx.android.synthetic.main.sheet_result_dialog.view.*
+import moxy.ktx.moxyPresenter
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
+import javax.inject.Provider
 
-
-@LayoutResourceId(R.layout.fragment_game)
+@AndroidEntryPoint
 class GameFragment : BaseFragment(), GameView {
 
-    @Inject
-    @InjectPresenter
-    lateinit var presenter: GamePresenter
-
-    @ProvidePresenter
-    fun providePresenter() = presenter
+    override val layoutRes: Int
+        get() = R.layout.fragment_game
 
     @Inject
+    lateinit var presenterProvider: Provider<GamePresenter>
+
+    private val presenter by moxyPresenter { presenterProvider.get() }
+
+    @Inject
+    @GlobalRouterQualifier
     lateinit var router: Router
+
+    @Inject
+    lateinit var gson: Gson
 
     lateinit var mediaPlayer: MediaPlayer
 
@@ -64,6 +69,11 @@ class GameFragment : BaseFragment(), GameView {
             }
         }
 
+        val songs = gson.fromJson(
+            requireArguments().getString(SONG_LIST_DATA_MODEL_EXTRA),
+            SongListDataModel::class.java
+        )
+        presenter.onCreate(songs)
     }
 
     private fun startSong() {

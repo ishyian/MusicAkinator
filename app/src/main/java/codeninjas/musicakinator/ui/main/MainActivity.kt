@@ -7,24 +7,30 @@ import android.speech.RecognizerIntent
 import codeninjas.musicakinator.R
 import codeninjas.musicakinator.other.base.BaseActivity
 import codeninjas.musicakinator.other.base.OnSpeechRecognizeListener
-import codeninjas.musicakinator.other.custom.annotations.LayoutResourceId
+import codeninjas.musicakinator.other.custom.annotations.GlobalNavigatorHolderQualifier
+import codeninjas.musicakinator.other.custom.annotations.GlobalRouterQualifier
 import codeninjas.musicakinator.other.custom.extensions.currentFragment
 import codeninjas.musicakinator.other.screens.MainScreens
+import dagger.hilt.android.AndroidEntryPoint
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
 import javax.inject.Inject
 
-@LayoutResourceId(R.layout.activity_main)
+@AndroidEntryPoint
 class MainActivity : BaseActivity() {
+
+    override val layoutRes: Int
+        get() = R.layout.activity_main
 
     private val navigator = SupportAppNavigator(this, R.id.container)
 
     @Inject
+    @GlobalNavigatorHolderQualifier
     lateinit var navigatorHolder: NavigatorHolder
 
-
     @Inject
+    @GlobalRouterQualifier
     lateinit var router: Router
 
 

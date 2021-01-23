@@ -2,8 +2,8 @@ package codeninjas.musicakinator.ui.main.game
 
 import codeninjas.musicakinator.domain.models.responseModels.DizzerTrackResponseModel
 import codeninjas.musicakinator.other.base.BaseView
-import com.arellomobile.mvp.viewstate.strategy.SkipStrategy
-import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
+import moxy.viewstate.strategy.SkipStrategy
+import moxy.viewstate.strategy.StateStrategyType
 
 interface GameView : BaseView {
 

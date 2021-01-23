@@ -8,30 +8,33 @@ import android.view.View
 import codeninjas.musicakinator.R
 import codeninjas.musicakinator.other.base.BaseFragment
 import codeninjas.musicakinator.other.base.OnSpeechRecognizeListener
-import codeninjas.musicakinator.other.custom.annotations.LayoutResourceId
+import codeninjas.musicakinator.other.custom.annotations.GlobalRouterQualifier
 import codeninjas.musicakinator.other.custom.extensions.setInputBackground
 import codeninjas.musicakinator.other.custom.extensions.setRoundedBtnBackground
 import codeninjas.musicakinator.other.custom.extensions.showAlertMessage
 import codeninjas.musicakinator.other.screens.MainScreens
 import codeninjas.musicakinator.ui.main.MainActivity
-import com.arellomobile.mvp.presenter.InjectPresenter
-import com.arellomobile.mvp.presenter.ProvidePresenter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_search_track.*
+import moxy.ktx.moxyPresenter
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
+import javax.inject.Provider
 
-@LayoutResourceId(R.layout.fragment_search_track)
+@AndroidEntryPoint
 class SearchTrackFragment : BaseFragment(), OnSpeechRecognizeListener,
     SearchTrackView {
 
-    @Inject
-    @InjectPresenter
-    lateinit var presenter: SearchTrackPresenter
-
-    @ProvidePresenter
-    fun providePresenter() = presenter
+    override val layoutRes: Int
+        get() = R.layout.fragment_search_track
 
     @Inject
+    lateinit var presenterProvider: Provider<SearchTrackPresenter>
+
+    private val presenter by moxyPresenter { presenterProvider.get() }
+
+    @Inject
+    @GlobalRouterQualifier
     lateinit var router: Router
 
     override fun renderView(view: View, savedInstanceState: Bundle?) {
@@ -49,7 +52,10 @@ class SearchTrackFragment : BaseFragment(), OnSpeechRecognizeListener,
             val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
             intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en_US")
             intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
-            activity!!.startActivityForResult(intent, MainActivity.REQUEST_CODE_SPEECH_RECOGNIZER)
+            requireActivity().startActivityForResult(
+                intent,
+                MainActivity.REQUEST_CODE_SPEECH_RECOGNIZER
+            )
         }
     }
 

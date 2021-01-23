@@ -1,9 +1,9 @@
 package codeninjas.musicakinator.other.base
 
-import com.arellomobile.mvp.MvpPresenter
-import com.arellomobile.mvp.MvpView
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import moxy.MvpPresenter
+import moxy.MvpView
 
 abstract class BasePresenter<T : MvpView> : MvpPresenter<T>() {
 
